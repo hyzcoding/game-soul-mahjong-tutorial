@@ -1,7 +1,10 @@
-import Mjdesktop = desktop.Mjdesktop
+import Mjdesktop = mjdesktop.Mjdesktop
 import MjHandPai = mjdesktop.MjHandPai
+import MJBlinnphongMaterial = shader.MJBlinnphongMaterial
+import MJBliinphongShader = shader.MJBliinphongShader
 import UI = ui.UI
 import MjPaiControlScript = script.MjPaiControlScript
+import MjHandPaiScript = script.MjHandPaiScript
 // 程序入口
 class LayaAir3D {
   private roleAni: Laya.Animation
@@ -16,7 +19,8 @@ class LayaAir3D {
     //适配模式
     Laya.stage.scaleMode = Laya.Stage.SCALE_SHOWALL
     Laya.stage.alignH = Laya.Stage.ALIGN_CENTER
-    Laya.stage.alignV = Laya.Stage.ALIGN_CENTER
+    Laya.stage.alignV = Laya.Stage.ALIGN_MIDDLE
+    Laya.stage.bgColor = '#000000'
     Laya.stage.screenMode = Laya.Stage.SCREEN_NONE
   }
   onload() {

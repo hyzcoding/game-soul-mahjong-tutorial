@@ -1,0 +1,23 @@
+﻿#ifdef FSHIGHPRECISION
+    precision highp float;
+#else
+    precision mediump float;
+#endif
+#include 'LightHelper.glsl';
+varying vec2 v_Texcoord;
+uniform sampler2D u_texture;
+varying vec3 v_Normal;
+uniform vec4 u_color;
+uniform float u_offset_x;
+uniform float u_offset_y;
+
+#if defined(DIRECTIONLIGHT)
+    varying vec3 v_PositionWorld;
+    uniform DirectionLight u_DirectionLight;
+#endif
+void main(){
+    vec2 uv = v_Texcoord;
+    uv[0] = uv[0] * 0.09765625 + u_offset_x;
+    uv[1] = uv[1] * 0.1367188 + u_offset_y;
+    gl_FragColor = texture2D(u_texture, uv);
+}

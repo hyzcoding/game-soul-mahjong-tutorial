@@ -4,6 +4,7 @@ module mjdesktop {
     private mjhandpai: Laya.Scene
     private camera: Laya.Camera
     private root: Laya.Sprite3D
+    private mjp_texture: Laya.Texture2D
     private my_mjp_frames: string[]
     private my_mjp_image_prefix: string = 'chs_t/myres2/mjp/mjp_default/ui/'
     private png_suffix = '.png'
@@ -63,29 +64,21 @@ module mjdesktop {
       this.root = this.mjhandpai.getChildByName('root') as Laya.Sprite3D
       var hands = this.root.getChildAt(0) as Laya.Sprite3D
       var pai = hands.getChildByName('pai') as Laya.MeshSprite3D
-      pai.addComponent(MjPaiControlScript)
-      var pai1: Laya.MeshSprite3D = Laya.Sprite3D.instantiate(
-        pai,
-        hands,
-        false
-        // location1
-      ) as Laya.MeshSprite3D
-      hands.addChild(pai1)
-      // pai1.meshRender.material = Laya.loader.getRes(
-      //   'res/scene/Asset/Resource/mjpai/mjp_default/hand_ui.png'
-      // )
-      console.log(hands)
+      // pai.addComponent(MjHandPaiScript)
+      this.mjp_texture = Laya.Texture2D.load(
+        'res/scene/Assets/Resource/mjpai/mjp_default/hand_ui.png'
+      ) as Laya.Texture2D
+
+      var material = pai.meshRender.material as Laya.BlinnPhongMaterial
+      var to = material.tilingOffset.elements
+      to[2] = 0.5
+      to[3] = -0.25
+      material.albedoTexture = this.mjp_texture
+      var position = pai.transform.position
       var mjp_image: string = this.my_mjp_image_prefix
         .concat(this.my_mjp_frames[0])
         .concat(this.png_suffix)
-      //创建标准材质
-      var material: Laya.StandardMaterial = new Laya.StandardMaterial()
-      //创建漫反射二维纹理贴图
-      var sprite = new Laya.Sprite()
-
-      //   this.root.removeChildAt(0)
       Laya.stage.addChild(this.mjhandpai)
-      //   this.root.addChild(child1)
     }
   }
 }
