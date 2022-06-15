@@ -112,7 +112,6 @@ module mjdesktop {
         this._outHitInfo.sprite3D.transform.translate(
           new Laya.Vector3(0, 0.05999999865889549, 0)
         )
-        this.index_click = sprite.
       }
       Laya.Physics.rayCast(this.ray, this._outHitInfo, 30, 0)
     }
