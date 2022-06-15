@@ -1,3 +1,5 @@
+///<reference path = '../shader/MJCartoonShader.ts' />
+///<reference path = '../shader/MJMaterial.ts'  />
 // import * as data from './json/example.json'
 module mjdesktop {
   export class Room {
@@ -32,14 +34,12 @@ module mjdesktop {
     private other_reveal: Laya.Sprite3D
     private effect: Laya.Sprite3D
     private _scene: Laya.Scene
-    private mjp_blinnphong_material: shader.MJBlinnphongMaterial
+    private mjp_cartoon_material: shader.MJCartoonMaterial
+    private mjp_outline_material: shader.MJOutlineMaterial
     private effect_map: { [key: string]: Laya.Sprite3D }
     constructor(room: Laya.Sprite3D) {
       this.room = room
       this.initRes()
-      new shader.MJBliinphongShader().initShader()
-      this.mjp_blinnphong_material = this.initMJBlinnphongMaterial()
-
       /**
        * poss
        * ming_ 鸣牌位置
@@ -75,11 +75,56 @@ module mjdesktop {
       var liqi_default: Laya.MeshSprite3D = Laya.loader.getRes(
         'res/scene/liqi_default.lh'
       )
-
+      this.loadTutorial()
       // var l = role3D
       //   .getChildByName('hand_human')
       //   .getChildByName('node_liqibang')
       // man_1.getChildByName('liqi').addChild(liqi_default)
+    }
+    public loadTutorial(): void {
+      Laya.loader.load(
+        [
+          { url: 'res/tutorial/charpter1.json', type: Laya.Loader.JSON },
+          { url: 'res/shader/outline/outline.ps', type: Laya.Loader.TEXT },
+          { url: 'res/shader/outline/outline.vs', type: Laya.Loader.TEXT },
+          { url: 'res/shader/outline/outline1.ps', type: Laya.Loader.TEXT },
+          { url: 'res/shader/outline/outline1.vs', type: Laya.Loader.TEXT },
+          { url: 'res/shader/cartoon/cartoon.ps', type: Laya.Loader.TEXT },
+          { url: 'res/shader/cartoon/cartoon.vs', type: Laya.Loader.TEXT },
+        ],
+        Laya.Handler.create(this, (): void => {
+          new shader.MJCartoonShader().initShader()
+          new shader.MJOutlineShader().initShader()
+          this.mjp_cartoon_material = this.initMJCartoonMaterial()
+          this.mjp_outline_material = this.initMJOutlineMaterial()
+          var obj: JSON = Laya.loader.getRes('res/tutorial/charpter1.json')
+          this.poss._childs.forEach((val, idx) => {
+            var temp = val as Laya.Sprite3D
+            obj[temp.name].forEach((v, i) => {
+              let sprite = this.initMJPSprite(
+                v,
+                this.mjp_cartoon_material,
+                this.mjp_outline_material,
+                val
+              )
+              var directionX = -1
+              var directionY = 0
+              var directionZ = 0
+              var x = 0.029754001647233963
+              var y = 0.03949800133705139
+              var z = 0.019314000383019447
+              sprite.transform.translate(
+                new Laya.Vector3(
+                  directionX * x * i,
+                  directionY * y * i,
+                  directionZ * z * i
+                )
+              )
+              val.addChild(sprite)
+            })
+          })
+        })
+      )
     }
     /**
      * 资源赋值
@@ -110,7 +155,7 @@ module mjdesktop {
       this.poss = this.room.getChildByName('poss') as Laya.Sprite3D
       this.poss_map = {}
       this.poss._childs.forEach((sprite: Laya.Sprite3D) => {
-        if (sprite.name.indexOf('pai_') >= 0) {
+        if (sprite.getChildByName('maque')) {
           var maque = sprite.getChildByName('maque') as Laya.Sprite3D
           maque.active = false
         }
@@ -138,13 +183,14 @@ module mjdesktop {
     /**
      * 初始化麻将sprite3D
      * @param mjp_name 麻将名称
-     * @param mj_blinnphong_material 麻将反光材质
+     * @param mj_cartoon_material 麻将反光材质
      * @param parent 父级sprite3D
      * @returns 麻将sprite3D
      */
     public initMJPSprite(
       mjp_name: string,
-      mj_blinnphong_material: shader.MJBlinnphongMaterial,
+      mj_cartoon_material: shader.MJCartoonMaterial,
+      mj_outline_material: shader.MJOutlineMaterial,
       parent: Laya.Sprite3D
     ): Laya.Sprite3D {
       var maque = parent.getChildByName('maque') as Laya.Sprite3D
@@ -160,36 +206,40 @@ module mjdesktop {
         position,
         rotation
       ) as Laya.MeshSprite3D
+      mj_cartoon_material.renderQueue = 2000
+      mjp_sprite_m.meshRender.material = mj_cartoon_material
       var mjp_sprite_m_outline = Laya.Sprite3D.instantiate(
         this.maque_outline,
         mjp_sprite_m,
         false,
         new Laya.Vector3(),
         new Laya.Quaternion()
-      )
+      ) as Laya.MeshSprite3D
+      mj_outline_material.renderQueue = 2999
+      mjp_sprite_m_outline.meshRender.material = mj_outline_material
       var mjp_sprite_m_effect = Laya.Sprite3D.instantiate(
         this.effect,
         mjp_sprite_m,
         false,
         new Laya.Vector3(),
         new Laya.Quaternion()
-      )
+      ) as Laya.MeshSprite3D
+      mjp_sprite_m_effect.removeChildren()
       mjp_sprite_m.addChild(mjp_sprite_m_outline)
       mjp_sprite_m.addChild(mjp_sprite_m_effect)
-      mjp_sprite_m.meshRender.material = mj_blinnphong_material
       mjp_sprite_all.addChild(mjp_sprite_m)
       mjp_sprite.addChild(mjp_sprite_all)
       // effect_shadow
       var mjp_sprite_effect_shadow = Laya.Sprite3D.instantiate(
         this.effect_map['effect_shadow'],
         mjp_sprite
-      )
+      ) as Laya.MeshSprite3D
       mjp_sprite.addChild(mjp_sprite_effect_shadow)
       // effect_shadow_touming
       var mjp_sprite_effect_shadow_touming = Laya.Sprite3D.instantiate(
         this.effect_map['effect_shadow_touming'],
         mjp_sprite
-      )
+      ) as Laya.MeshSprite3D
       mjp_sprite.addChild(mjp_sprite_effect_shadow_touming)
       return mjp_sprite
     }
@@ -197,16 +247,16 @@ module mjdesktop {
      * 初始化shader材质
      * @returns 麻将反光材质
      */
-    public initMJBlinnphongMaterial(): shader.MJBlinnphongMaterial {
-      var mj_blinnphong_material = new shader.MJBlinnphongMaterial()
-      mj_blinnphong_material.setTexture(
+    public initMJCartoonMaterial(): shader.MJCartoonMaterial {
+      var mj_cartoon_material = new shader.MJCartoonMaterial()
+      mj_cartoon_material.setTexture(
         1,
         Laya.Texture2D.load('res/scene/mjp_default/mjp.png')
       )
-      mj_blinnphong_material.setVector2(2, new Laya.Vector4(1, 1, 1, 1))
-      mj_blinnphong_material.setNumber(10, 0.4)
-      mj_blinnphong_material.setVector2(30, new Laya.Vector3(1, 1, 1))
-      mj_blinnphong_material.setVector2(
+      mj_cartoon_material.setVector2(2, new Laya.Vector4(1, 1, 1, 1))
+      mj_cartoon_material.setNumber(10, 0.4)
+      mj_cartoon_material.setVector2(30, new Laya.Vector3(1, 1, 1))
+      mj_cartoon_material.setVector2(
         31,
         new Laya.Vector3(
           0.7879999876022339,
@@ -214,7 +264,32 @@ module mjdesktop {
           0.8234999775886536
         )
       )
-      return mj_blinnphong_material
+      return mj_cartoon_material
+    }
+    /**
+     * 初始化shader材质
+     * @returns 麻将边框材质
+     */
+    public initMJOutlineMaterial(): shader.MJOutlineMaterial {
+      var mj_outline_material = new shader.MJOutlineMaterial()
+      mj_outline_material.setNumber(1, 0.0012)
+      mj_outline_material.setVector2(
+        2,
+        new Laya.Vector3(
+          0.16500000655651093,
+          0.19200000166893005,
+          0.20399999618530273
+        )
+      )
+      mj_outline_material.setNumber(3, 0.6)
+      mj_outline_material.blend = Laya.BaseMaterial.BLEND_ENABLE_ALL
+      mj_outline_material.depthWrite = false
+      mj_outline_material.srcBlend = Laya.BaseMaterial.BLENDPARAM_SRC_ALPHA
+      mj_outline_material.alphaTest = true
+      mj_outline_material.dstBlend =
+        Laya.BaseMaterial.BLENDPARAM_ONE_MINUS_SRC_ALPHA
+      mj_outline_material.cull = 1
+      return mj_outline_material
     }
   }
 }

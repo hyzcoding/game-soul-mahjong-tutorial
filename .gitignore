@@ -1,4 +1,4 @@
 /release
-/.laya
 /bin/js
-/bin/libs
+/bin/index.html
+/node_modules
