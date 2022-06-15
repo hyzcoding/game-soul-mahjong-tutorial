@@ -12,6 +12,19 @@ module script {
     public _load(owner: Laya.Sprite3D): void {
       //获取脚本所属对象
       this.pai = owner as Laya.MeshSprite3D
+      this.pai.on(Laya.Event.MOUSE_OVER, this, this.mouseOver)
+      this.pai.on(Laya.Event.MOUSE_OUT, this, this.mouseOut)
+    }
+
+    public mouseOver(e) {
+      console.log('选中')
+
+      this.pai.transform.translate(new Laya.Vector3(0, 10, 0))
+    }
+    public mouseOut(e) {
+      console.log('取消选择')
+
+      this.pai.transform.translate(new Laya.Vector3(0, -10, 0))
     }
     /*覆写组件所属3D对象实例化完成后，第一次更新时的执行方法*/
     public _start(state: Laya.RenderState): void {
@@ -56,7 +69,6 @@ module script {
      */
     public _update(state: Laya.RenderState): void {
       // console.log(this.t2d)
-
       //所属脚本对象旋转更新
       // var material: Laya.StandardMaterial = this.pai.meshRender
       //   .material as Laya.StandardMaterial

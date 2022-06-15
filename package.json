@@ -1,0 +1,38 @@
+{
+  "name": "game-soul-mahjong-tutorial",
+  "version": "1.0.0",
+  "description": "a tutorial of lizhi mahjong",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyzcoding/game-soul-mahjong-tutorial.git"
+  },
+  "keywords": [
+    "mahjong",
+    "laya"
+  ],
+  "author": "hyzcoding",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hyzcoding/game-soul-mahjong-tutorial/issues"
+  },
+  "homepage": "https://github.com/hyzcoding/game-soul-mahjong-tutorial#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "dateformat": "^3.0.3",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-less": "^3.4.0",
+    "gulp-util": "^3.0.8",
+    "webpack": "^3.10.0",
+    "webpack-stream": "^4.0.0"
+  }
+}

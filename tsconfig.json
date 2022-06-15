@@ -3,9 +3,7 @@
     "module": "commonjs",
     "target": "es5",
     "sourceMap": true,
-    // "esModuleInterop": false
     "typeRoots": ["./typings"]
   },
-  "lib": ["es2016", "dom", "es5"],
   "exclude": ["node_modules"]
 }
