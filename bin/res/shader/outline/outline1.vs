@@ -1,9 +1,4 @@
-﻿#define HIGHPRECISION
-#define DIRECTIONLIGHT
-#define UV
-#define BONE
-#define ALPHATEST
-attribute vec4 a_Position;
+﻿attribute vec4 a_Position;
 attribute vec2 a_Texcoord;
 attribute vec3 a_Normal;
 uniform mat4 u_MvpMatrix;
@@ -11,18 +6,20 @@ uniform mat4 u_WorldMat;
 varying vec2 v_Texcoord;
 varying vec3 v_Normal;
 uniform float u_outline;
-//#ifdef BONE
+
+#ifdef BONE
     attribute vec4 a_BoneIndices;
     attribute vec4 a_BoneWeights;
     const int c_MaxBoneCount = 24;
     uniform mat4 u_Bones[c_MaxBoneCount];
-//#endif
+#endif
 #if defined(DIRECTIONLIGHT)
     varying vec3 v_PositionWorld;
 #endif
+
 void main(){
     v_Texcoord=a_Texcoord;
-//    #ifdef BONE
+    #ifdef BONE
         mat4 skinTransform=mat4(0.0);
         skinTransform += u_Bones[int(a_BoneIndices.x)] * a_BoneWeights.x;
         skinTransform += u_Bones[int(a_BoneIndices.y)] * a_BoneWeights.y;
@@ -31,7 +28,11 @@ void main(){
         vec4 position = skinTransform * (a_Position + vec4(normalize(a_Normal)* u_outline, 0));
         gl_Position=u_MvpMatrix * position;
         mat3 worldMat=mat3(u_WorldMat * skinTransform);
-//    #endif
+    #else
+        vec4 position = a_Position +  vec4(normalize(a_Normal)* u_outline, 0);
+        gl_Position=u_MvpMatrix * position; 
+        mat3 worldMat=mat3(u_WorldMat);
+    #endif
     v_Normal=worldMat*a_Normal;
     #if defined(DIRECTIONLIGHT)
         v_PositionWorld=(u_WorldMat*position).xyz;

@@ -1,8 +1,9 @@
 module script {
   export class MjHandPaiScript extends Laya.Script {
     /*脚本所属的3D对象*/
-    private pai: Laya.MeshSprite3D
-    private t2d: Laya.Texture2D
+    private pai: sprite.MJHandSprite
+    private isdora: Boolean
+    private effect_dora: Laya.Sprite3D
     constructor() {
       super()
     }
@@ -11,9 +12,15 @@ module script {
                 */
     public _load(owner: Laya.Sprite3D): void {
       //获取脚本所属对象
-      this.pai = owner as Laya.MeshSprite3D
-      this.pai.on(Laya.Event.MOUSE_OVER, this, this.mouseOver)
-      this.pai.on(Laya.Event.MOUSE_OUT, this, this.mouseOut)
+      this.pai = owner as sprite.MJHandSprite
+      this.isdora = this.pai.isDora
+      if (this.isdora) {
+        this.effect_dora = this.pai._parent.getChildByName(
+          'effect_dora'
+        ) as Laya.Sprite3D
+        this.effect_dora.active = true
+        this.pai.addChild(this.effect_dora)
+      }
     }
 
     public mouseOver(e) {
@@ -27,43 +34,7 @@ module script {
       this.pai.transform.translate(new Laya.Vector3(0, -10, 0))
     }
     /*覆写组件所属3D对象实例化完成后，第一次更新时的执行方法*/
-    public _start(state: Laya.RenderState): void {
-      //获取模型上的材质
-      // this.pai.meshFilter.sharedMesh = Laya.Mesh.load("res/scene/Assets/Resource/mjpai/mjp-001.lm")
-
-      var material: Laya.BlinnPhongMaterial = this.pai.meshRender
-        .material as Laya.BlinnPhongMaterial
-      // console.log(mat)
-      // var material: Laya.BlinnPhongMaterial = new Laya.BlinnPhongMaterial()
-      // console.log(this.pai.meshRender.material)
-      // var material: Laya.BlinnPhongMaterial = Laya.BlinnPhongMaterial.load(
-      //   'res/scene/Assets/Resource/mjpai/mjp.lmat'
-      // )
-
-      // console.log(material)
-
-      // console.log(material)
-      this.t2d = Laya.Texture2D.load(
-        'res/scene/mjp_default/mjp.png'
-      ) as Laya.Texture2D
-      console.log(this.t2d)
-
-      // var t2d = Laya.loader.getRes(
-      //   'res/scene/Asset/Resource/mjpai/mjp_default/hand_ui.png'
-      // ) as Laya.Texture2D
-      // var t2d = t.bitmap as Laya.Texture2D
-      // var t2d=new Laya.Texture2D(t.width,t.height,Laya.TextureFor)
-      // material.albedoTexture = this.t2d
-      // console.log(material.albedoTexture)
-      // var texture = material.albedoTexture as Laya.Texture2D
-      // var material = this.pai.meshRender.material as Laya.BlinnPhongMaterial
-      // material.albedoTexture = t2d
-      // this.pai.meshRender.material = material
-      // mat.albedoTexture = t2d
-      //material.albedoTexture = sp.
-      // // //修改材质的反射率颜色，让模型偏红
-      // material.albedo = new Laya.Vector4(1, 0, 0, 1);
-    }
+    public _start(state: Laya.RenderState): void {}
     /*覆写组件更新方法（相当于帧循环）
      *state渲染状态
      */

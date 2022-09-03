@@ -1,0 +1,126 @@
+{
+  "tabs": {
+    "page1": [
+      { "name": "charpter1", "text": "第一章\n麻将的基础" },
+      { "name": "charpter2", "text": "第二章\n牌效率" },
+      { "name": "charpter3", "text": "第三章\n手役" },
+      { "name": "charpter4", "text": "第四章\n宝牌和赤牌" },
+      { "name": "charpter5", "text": "第五章\n鸣牌" }
+    ],
+    "page2": [
+      { "name": "charpter6", "text": "第六章\n立直" },
+      { "name": "charpter7", "text": "第七章\n防守" },
+      { "name": "charpter8", "text": "第八章\n状况判断" },
+      { "name": "charpter9", "text": "第九章\n弓手判断" },
+      { "name": "charpter10", "text": "第十章\n总结" }
+    ],
+    "page3": [
+      { "name": "charpter11", "text": "第十一章\n立直" },
+      { "name": "charpter12", "text": "第十二章\n防守" },
+      { "name": "charpter13", "text": "第十三章\n状况判断" },
+      { "name": "charpter14", "text": "第十四章\n弓手判断" }
+    ]
+  },
+  "charpter1": [
+    {
+      "room": "金之间",
+      "date": "2022/02/02",
+      "remarks_info": "牌谱名称",
+      "id": "dsadawe"
+    },
+    {
+      "room": "因之间",
+      "date": "2022/03/02",
+      "remarks_info": "牌谱名称1",
+      "id": "dsadaxxxxwe"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "牌谱名称2",
+      "id": "dsaddweeawe"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "牌谱名称2",
+      "id": "dsadasdsdasdawe"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "牌谱名称2",
+      "id": "dsadweqweqweeawe"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/04",
+      "remarks_info": "牌谱名称3",
+      "id": "dsaerererewdawe"
+    }
+  ],
+  "charpter2": [
+    {
+      "room": "金之间",
+      "date": "2022/02/02",
+      "remarks_info": "第二章——牌谱名称"
+    },
+    {
+      "room": "因之间",
+      "date": "2022/03/02",
+      "remarks_info": "第二章——牌谱名称1"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "第二章——牌谱名称2"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "第二章——牌谱名称2"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "第二章——牌谱名称2"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/04",
+      "remarks_info": "第二章——牌谱名称3"
+    }
+  ],
+  "charpter3": [
+    {
+      "room": "金之间",
+      "date": "2022/02/02",
+      "remarks_info": "第三章——牌谱名称"
+    },
+    {
+      "room": "因之间",
+      "date": "2022/03/02",
+      "remarks_info": "第三章——牌谱名称1"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "第三章——牌谱名称2"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "第三章——牌谱名称2"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/02",
+      "remarks_info": "第三章——牌谱名称2"
+    },
+    {
+      "room": "同志间",
+      "date": "2022/04/04",
+      "remarks_info": "第三章——牌谱名称3"
+    }
+  ]
+}

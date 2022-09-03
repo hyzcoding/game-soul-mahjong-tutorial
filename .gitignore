@@ -2,3 +2,9 @@
 /bin/js
 /bin/index.html
 /node_modules
+/bin/code.js
+bin/bitmapfont/超世纪粗毛楷.ttf
+bin/bitmapfont/汉仪尚巍手书W.TTF
+bin/bitmapfont/今昔豪龙字体.ttf
+/.laya/chrome
+/.laya/pubset.json

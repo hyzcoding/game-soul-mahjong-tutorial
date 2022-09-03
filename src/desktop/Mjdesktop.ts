@@ -17,9 +17,9 @@ module mjdesktop {
           { url: resource },
           { url: table_cloth_resource },
           // 麻将桌
-          { url: 'res/atlas/chs_t/myres/mjdesktop.atlas' },
+          { url: 'res/atlas/myres/mjdesktop.atlas' },
           // 分数
-          { url: 'res/atlas/chs_t/myres/mjdesktop/number.atlas' },
+          { url: 'res/atlas/myres/mjdesktop/number.atlas' },
           // 人手动画
           { url: 'res/scene/hand_human.lh' },
           { url: 'res/scene/liqi_default.lh' },
@@ -39,7 +39,7 @@ module mjdesktop {
         .getChildByName('room')
         .getChildByName('container_desktop') as Laya.Sprite3D
       this.main_camare = this.mjdesktop.getChildByName(
-        'main_camare'
+        'main_camera'
       ) as Laya.Camera
       this.light = this.mjdesktop.getChildByName('light') as Laya.LightSprite
       this.mjdesktop.zOrder = -1
@@ -53,8 +53,8 @@ module mjdesktop {
       var light: Laya.DirectionLight = this.mjdesktop.addChild(
         new Laya.DirectionLight()
       ) as Laya.DirectionLight
-      light.diffuseColor = new Laya.Vector3(0.5, 0.5, 0.5)
-      light.intensity = 1
+      light.color = new Laya.Vector3(0.5, 0.5, 0.5)
+      // light.intensity = 1
       // this.mjdesktop._addLight(light)
       //设置平行光的方向
       light.direction = new Laya.Vector3(
